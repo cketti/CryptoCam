@@ -14,10 +14,6 @@ android {
         minSdkVersion 14
         targetSdkVersion 17
 
-        ndk {
-            moduleName "libjni_mosaic"
-        }
-
         testApplicationId "com.android.camera.tests"
         testInstrumentationRunner "android.test.InstrumentationTestRunner"
     }
@@ -28,4 +24,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+
+    sourceSets.main {
+        jni.srcDirs = [] // disable use of automatically generated Android.mk
+        jniLibs.srcDir 'build/intermediates/ndk/lib'
+    }
+}
+
+tasks.withType(Compile) {
+    compileTask -> compileTask.dependsOn ndkBuild
+}
+
+task ndkBuild(type: Exec, description: 'Compile JNI source via NDK') {
+    def ndkDir = project.plugins.findPlugin('com.android.application').getNdkFolder()
+    commandLine "$ndkDir/ndk-build",
+            "NDK_PROJECT_PATH=null",
+            "APP_PLATFORM=android-19",
+            "APP_BUILD_SCRIPT=$projectDir/src/main/jni/Android.mk",
+            "NDK_APPLICATION_MK=$projectDir/src/main/jni/Application.mk",
+            "NDK_OUT=$buildDir/intermediates/ndk/obj",
+            "NDK_LIBS_OUT=$buildDir/intermediates/ndk/lib"
 }
