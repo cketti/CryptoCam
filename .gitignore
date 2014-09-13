@@ -9,3 +9,6 @@ libs/
 gen/
 .idea/
 .gitignore
+build/
+.gradle/
+local.properties

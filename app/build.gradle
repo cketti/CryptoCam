@@ -1,0 +1,31 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile 'com.android.support:support-v13:20.0.0'
+    compile 'com.adobe.xmp:xmpcore:5.1.2'
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "20.0.0"
+
+    defaultConfig {
+        applicationId "com.android.camera2"
+        minSdkVersion 14
+        targetSdkVersion 17
+
+        ndk {
+            moduleName "libjni_mosaic"
+        }
+
+        testApplicationId "com.android.camera.tests"
+        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+    }
+
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
