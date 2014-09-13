@@ -673,4 +673,6 @@ CHAR LIMIT = NONE] -->
 
     <!--  String shown when setting the homepage wallpaper in the background [CHAR LIMIT=NONE] -->
     <string name="setting_wallpaper">Setting wallpaper</string>
+
+    <string name="select_image">"Select photo"</string>
  </resources>
