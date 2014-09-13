@@ -17,7 +17,6 @@
 package com.android.camera;
 
 import java.io.File;
-import java.io.FileOutputStream;
 
 import android.annotation.TargetApi;
 import android.content.ContentResolver;
@@ -32,6 +31,7 @@ import android.provider.MediaStore.Images.ImageColumns;
 import android.provider.MediaStore.MediaColumns;
 import android.util.Log;
 
+import com.android.camera.crypto.CryptoController;
 import com.android.camera.data.LocalData;
 import com.android.camera.exif.ExifInterface;
 import com.android.camera.util.ApiHelper;
@@ -64,7 +64,8 @@ public class Storage {
     }
 
     public static void writeFile(String path, byte[] jpeg, ExifInterface exif) {
-        if (exif != null) {
+        //FIXME
+        if (false && exif != null) {
             try {
                 exif.writeExif(jpeg, path);
             } catch (Exception e) {
@@ -76,18 +77,11 @@ public class Storage {
     }
 
     public static void writeFile(String path, byte[] data) {
-        FileOutputStream out = null;
         try {
-            out = new FileOutputStream(path);
-            out.write(data);
+            CryptoController cryptoController = CryptoController.getInstance();
+            cryptoController.writeEncrypted(data, new File(path));
         } catch (Exception e) {
             Log.e(TAG, "Failed to write data", e);
-        } finally {
-            try {
-                out.close();
-            } catch (Exception e) {
-                Log.e(TAG, "Failed to close file after write", e);
-            }
         }
     }
 

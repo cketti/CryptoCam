@@ -3,6 +3,9 @@ apply plugin: 'com.android.application'
 dependencies {
     compile 'com.android.support:support-v13:20.0.0'
     compile 'com.adobe.xmp:xmpcore:5.1.2'
+    compile 'com.madgag.spongycastle:core:1.51.0.0'
+    compile 'com.madgag.spongycastle:prov:1.51.0.0'
+    compile 'com.madgag.spongycastle:pg:1.51.0.0'
 }
 
 android {
